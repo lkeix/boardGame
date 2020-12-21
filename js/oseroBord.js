@@ -1,3 +1,5 @@
+//文字コードはutf-8
+
 var board = []
 var ban;
 // テーブルで盤面を作成する処理
@@ -13,12 +15,11 @@ function ban_new() {
     }
 };
 
-function NewBoard() {
-    // [i][j]�̈ʒu��next��color�̃f�[�^������.
+//boardの初期化
+function NewBoard() { //[i][j]の位置にnextとcolorの変数を用意する
     for (let i = 0; i < 8; i++) {
         let tmpA = []
-        for (let j = 0; j < 8; j++) {
-            // next�͎��̎�̈ʒu, color�̓R�}�̐F
+        for (let j = 0; j < 8; j++) { //nextは次の手の[i][j], colorはコマの色
             if ((i == 3 || i == 4) && i == j) {
                 tmpA.push({
                     next: null,
@@ -42,37 +43,39 @@ function NewBoard() {
     }
 }
 
-//�R�}��u��
-function placeDisk(xPos, yPos, color) { //���� xPos = 0, yPos = 0;
+
+//コマを置く
+function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
     board[yPos][xPos].color = color;
     
     
-    let sPos = {x:xPos, y:yPos}; //�T���ʒu
+    let sPos = {x:xPos, y:yPos}; //探す位置
 
-    let rColor; //�u���R�}�Ɣ��΂̐F
+    let rColor; //置くコマと反対の色
     (color == "white") ? rColor = "black" : rColor = "white";
 
     let count = 0;
-    let stack = []; //�Ђ�����Ԃ��R�}�̈ʒu������
+    let stack = []; //ひっくり返すコマの位置を入れる
 
     let dir = [
-        {x:0,y:-1}, //��
-        {x:0,y:1}, //��
-        {x:-1,y:0}, //��
-        {x:1,y:0}, //�E
-        {x:1,y:-1}, //�E��
-        {x:-1,y:-1}, //����
-        {x:1,y:1}, //�E��
-        {x:-1,y:1} //����
+        {x:0,y:-1}, //上
+        {x:0,y:1}, //下
+        {x:-1,y:0}, //左
+        {x:1,y:0}, //右
+        {x:1,y:-1}, //右上
+        {x:-1,y:-1}, //左上
+        {x:1,y:1}, //右下
+        {x:-1,y:1} //左下
     ]; 
     
     
-    //�Ђ�����Ԃ��R�}��stack�ɓ����
+    //ひっくり返すコマをstackに入れる
     for (let n = 0; n < dir.length; n++) {
         sPos.x = xPos;
         sPos.y = yPos;
 
-        let flag = false; //while �𔲂���t���b�O;
+
+        let flag = false; //whileを抜けるフラッグ
         while (true) {
             sPos.x += dir[n].x;
             sPos.y += dir[n].y;
@@ -102,7 +105,7 @@ function placeDisk(xPos, yPos, color) { //���� xPos = 0, yPos = 0;
         count = 0;
     }
 
-    //�Ђ�����Ԃ�
+    //ひっくり返す
     while (stack.length != 0) {
         let temp = stack.pop();
         board[temp.y][temp.x].color = color;
