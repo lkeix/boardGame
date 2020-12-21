@@ -6,7 +6,7 @@ var board = []
 function NewBoard() { //[i][j]の位置に変数を用意する
     for (let i = 0; i < 8; i++) {
         let tmpA = []
-        for (let j = 0; j < 8; j++) { //beforeはその手が置かれる前の手の座標, colorはコマの色, caSetはそれぞれの色のコマが置けるか
+        for (let j = 0; j < 8; j++) { //beforeはその手が置かれる前の手の座標, colorはコマの色, canSetOOはそれぞれの色のコマが置けるか
             if ((i == 3 || i == 4) && i == j) {
                 tmpA.push({
                     before: null,
