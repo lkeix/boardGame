@@ -1,6 +1,19 @@
 //文字コードはutf-8
 
 var board = []
+var ban;
+// テーブルで盤面を作成する処理
+function ban_new() {
+    ban = document.getElementById('field')
+    for (var x = 0; x < 8; x++) {
+        var tr = "<tr>"
+        for (var y = 0; y < 8; y++) {
+            tr += "<td></td>"
+        }
+        tr += "</tr>"
+        ban.innerHTML += tr
+    }
+};
 
 //boardの初期化
 function NewBoard() { //[i][j]の位置に変数を用意する
@@ -51,6 +64,7 @@ function NewBoard() { //[i][j]の位置に変数を用意する
     }
 }
 
+
 //コマを置く
 function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
     board[yPos][xPos].color = color;
@@ -80,6 +94,7 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
     for (let n = 0; n < dir.length; n++) {
         sPos.x = xPos;
         sPos.y = yPos;
+
 
         let flag = false; //whileを抜けるフラッグ
         while (true) {
