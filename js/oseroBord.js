@@ -3,26 +3,47 @@
 var board = []
 
 //boardの初期化
-function NewBoard() { //[i][j]の位置にnextとcolorの変数を用意する
+function NewBoard() { //[i][j]の位置に変数を用意する
     for (let i = 0; i < 8; i++) {
         let tmpA = []
-        for (let j = 0; j < 8; j++) { //nextは次の手の[i][j], colorはコマの色
+        for (let j = 0; j < 8; j++) { //beforeはその手が置かれる前の手の座標, colorはコマの色, canSetOOはそれぞれの色のコマが置けるか
             if ((i == 3 || i == 4) && i == j) {
                 tmpA.push({
-                    next: null,
-                    color: "white"
-                })
+                    before: null,
+                    color: "white",
+                    canSetBlack: false,
+                    canSetWhite: false
             }
             else if ((i == 3 && j == 4) || (j == 3 && i == 4)) {
                 tmpA.push({
-                    next: null,
-                    color: "black"
+                    before: null,
+                    color: "black",
+                    canSetBlack: false,
+                    canSetWhite: false
+                })
+            }
+            else if ((i == 2 && j == 3) || (i == 3 && j == 2) || (i == 4 && j == 5) || (i == 5 && j == 4)) {
+                tmpA.push({
+                    before: null,
+                    color: "",
+                    canSetBlack: true,
+                    canSetWhite: false
+                })
+            }
+            else if ((i == 2 && j == 4) || (i == 3 && j == 5) || (i == 4 && j == 2) || (i == 5 && j == 3)) {
+                tmpA.push({
+                    before: null,
+                    color: "",
+                    canSetBlack: false,
+                    canSetWhite: true
                 })
             }
             else {
                 tmpA.push({
-                    next: null,
-                    color: ""
+                    before: null,
+                    color: "",
+                    canSetBlack: false,
+                    canSetWhite: false
                 })
             }
         }
