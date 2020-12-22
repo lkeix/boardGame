@@ -1,8 +1,8 @@
 //文字コードはutf-8
 
 var board = []
+// tableタグで盤面の絵を作成する処理
 var ban;
-// テーブルで盤面を作成する処理
 function ban_new() {
     ban = document.getElementById('field')
     for (var x = 0; x < 8; x++) {
@@ -14,6 +14,11 @@ function ban_new() {
         ban.innerHTML += tr
     }
 };
+// 盤面の状況を二次元配列で定義
+var ban_ar = new Array(8)   // この変数に処理を追加してください。
+for (var x = 0; x < ban_ar.length; x++){
+    ban_ar[x] = new Array(8)
+}
 
 //boardの初期化
 function NewBoard() { //[i][j]の位置に変数を用意する
