@@ -26,6 +26,7 @@ function NewBoard() { //[i][j]の位置に変数を用意する
                     color: "white",
                     canSetBlack: false,
                     canSetWhite: false
+                })
             }
             else if ((i == 3 && j == 4) || (j == 3 && i == 4)) {
                 tmpA.push({
@@ -132,3 +133,6 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
         board[temp.y][temp.x].color = color;
     }
 }
+
+
+
