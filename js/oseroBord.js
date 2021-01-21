@@ -2,6 +2,8 @@
 
 var board = []
 var ban;
+NewBoard();
+var player = "black";
 // テーブルで盤面を作成する処理
 function ban_new() {
     ban = document.getElementById('field')
@@ -26,6 +28,7 @@ function NewBoard() { //[i][j]の位置に変数を用意する
                     color: "white",
                     canSetBlack: false,
                     canSetWhite: false
+                })
             }
             else if ((i == 3 && j == 4) || (j == 3 && i == 4)) {
                 tmpA.push({
@@ -132,3 +135,47 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
         board[temp.y][temp.x].color = color;
     }
 }
+
+
+/*-------------------デバッグ用関数 -----------------------*/
+function testView() {
+    console.log("　０１２３４５６７");
+    for (let i = 0; i < 8; i++) {
+        let str = "";
+        str += String.fromCharCode(i + 48 + 65248);
+        for (let j = 0; j < 8; j++) {
+            if (board[i][j].color == "white") {
+                str += "◆";
+            } else if (board[i][j].color == "black") {
+                str += "◇";
+            } else {
+                str += "　";
+            }
+        }
+        console.log(str);
+    }
+    
+}
+
+function OnButtonClick() {
+    let x = document.forms.id_form1.id_textBox1.value;
+    let y = document.forms.id_form1.id_textBox2.value;
+    player = "black";
+    placeDisk(x-0,y-0,player);
+    console.clear();
+    testView();
+    
+    //(player == "white") ? player = "black" : player = "white";
+}
+
+function OnButtonClick2() {
+    let x = document.forms.id_form1.id_textBox1.value;
+    let y = document.forms.id_form1.id_textBox2.value;
+    player = "white";
+    placeDisk(x-0,y-0,player);
+    console.clear();
+    testView();
+    
+    //(player == "white") ? player = "black" : player = "white";
+}
+/*-----------------------------------------------------*/
