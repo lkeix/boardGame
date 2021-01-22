@@ -179,3 +179,31 @@ function OnButtonClick2() {
     //(player == "white") ? player = "black" : player = "white";
 }
 /*-----------------------------------------------------*/
+
+//盤面の白黒それぞれの駒の数を数える
+function ban_count() {
+
+
+
+
+    //盤面の駒が1色になった場合
+    if(count_white==0){
+        victory=black;
+        Game_finish;//geme終了を表示
+    }
+    else if(count_black==0){
+        victory=white;
+        Game_finish;//geme終了を表示    
+    }
+}
+
+function Game_finish(){
+    if(victory==black){
+        let string = '黒の勝利です';
+        string;
+    }
+    else{
+        let string = '白の勝利です';
+        string;
+    }
+}
