@@ -75,7 +75,7 @@ function NewBoard() { //[i][j]の位置に変数を用意する
 
 //コマを置く(この関数を使う)
 function placeDisk(xPos, yPos, color) {//左上 xPos = 0, yPos = 0, colorは置く色;
-    if (board[yPos][xPos].canSetBlack && color === "black" && board[yPos][xPos].canSetWhite && color === "white") {
+    if (board[yPos][xPos].canSetBlack && color === "black" || board[yPos][xPos].canSetWhite && color === "white") {
         placeADisk(xPos,yPos,color);
 
 
