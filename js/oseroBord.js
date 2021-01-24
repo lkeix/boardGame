@@ -22,6 +22,32 @@ function ban_new() {
     }
 };
 
+// 盤面の状況を二次元配列で定義
+var ban_ar = new Array(8)   // この変数に処理を追加してください。
+for (var x = 0; x < ban_ar.length; x++){
+    ban_ar[x] = new Array(8)
+}
+
+// 盤面をスタートの状態(=白黒2枚ずつの状態)にする処理
+function ban_init () {
+    // 全てをクリア
+    for (var x = 0; x < 8; x++) {
+        for (var y = 0; y < 8; y++) {
+        ban_ar[x][y] = 0
+        }
+    }
+    // 初期状態では、真ん中に白黒を配列
+    ban_ar[3][3] = -1
+    ban_ar[4][3] = 1
+    ban_ar[3][4] = 1
+    ban_ar[4][4] = -1
+    ban_set()
+    
+    // ターンも初期化
+    // turn = 0
+    // change_turn()
+};
+
 //boardの初期化
 function NewBoard() { //[i][j]の位置に変数を用意する
     for (let i = 0; i < 8; i++) {

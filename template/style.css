@@ -1,3 +1,4 @@
+/* 盤面の色とマスの形を指定 */
 #field td {
   border: 1px solid black;
   width: 50px;
