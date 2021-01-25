@@ -44,6 +44,30 @@ function ban_init () {
     // change_turn()
 };
 
+// 盤面状況(=配列)を実際の盤面へ反映させる処理
+function ban_set () {
+    var stone = ""
+    // ban_ar内の要素の値(=0,-1,1)次第でHTMLに表示させるコマを決める
+    for (var x = 0; x < 8; x++) {
+        for (var y = 0; y < 8; y++) {
+            switch( ban_ar[x][y] ) {
+                case 0:
+                    stone = ""
+                    break;
+                case -1:
+                    stone = "○"
+                    break;
+                case 1:
+                    stone = "●"
+                    break;
+            }
+            // htmlのtdタグに石をいれる
+            ban.rows[x].cells[y].innerText = stone;
+        }
+    }
+    return true
+};
+
 //boardの初期化
 function NewBoard() { //[i][j]の位置に変数を用意する
     for (let i = 0; i < 8; i++) {
