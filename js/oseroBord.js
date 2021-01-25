@@ -2,10 +2,14 @@
 
 var board = []
 var ban;
-NewBoard();
-var player = "black";
 
-// tableタグで緑色の盤面を作成する処理
+NewBoard();
+testView();
+var player = "black";//現在のプレイヤー
+
+var beforeDiskPos = {};//一つ前のコマの位置
+
+// テーブルで盤面を作成する処理
 function ban_new() {
     ban = document.getElementById('field')
     for (var x = 0; x < 8; x++) {
@@ -119,9 +123,25 @@ function NewBoard() { //[i][j]の位置に変数を用意する
 }
 
 
-//コマを置く
-function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
+//コマを置く(この関数を使う)
+function placeDisk(xPos, yPos, color) {//左上 xPos = 0, yPos = 0, colorは置く色;
+    if (board[yPos][xPos].canSetBlack && color === "black" || board[yPos][xPos].canSetWhite && color === "white") {
+        placeADisk(xPos,yPos,color);
+
+
+
+    }
+}
+
+
+function placeADisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
+
+    //置いたコマの更新
     board[yPos][xPos].color = color;
+    board[yPos][xPos].before = Object.assign({},beforeDiskPos);
+
+    //前の手を保存
+    beforeDiskPos = {x:xPos, y:yPos, toPos:[]};
     
     
     let sPos = {x:xPos, y:yPos}; //探す位置
@@ -149,7 +169,7 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
         sPos.x = xPos;
         sPos.y = yPos;
 
-
+        let lenOfStack = stack.length;
         let flag = false; //whileを抜けるフラッグ
         while (true) {
             sPos.x += dir[n].x;
@@ -170,6 +190,10 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
                 count++;
             } else if (board[sPos.y][sPos.x].color == color){
                 flag = true;
+                
+                //undoに使う
+                if (stack.length != lenOfStack) beforeDiskPos.toPos.push(stack[stack.length-1]);//追加先
+                
                 count = 0;
             } else {
                 flag = true;
@@ -185,6 +209,43 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
         let temp = stack.pop();
         board[temp.y][temp.x].color = color;
     }
+}
+
+//一手戻る(正しく置かれていないとうまく動かないと思う)
+function undo() {
+    let before = beforeDiskPos;
+    if (Object.keys(before).length == 0) return;
+
+    while (before.toPos.length != 0 ) {
+        let temp = before.toPos.pop();
+        let dirX;
+        let dirY;
+        if (temp.x - before.x > 0) {
+            dirX = -1;
+        } else if (temp.x == before.x) {
+            dirX = 0;
+        } else {
+            dirX = 1;
+        }
+
+        if (temp.y - before.y > 0) {
+            dirY = -1;
+        } else if (temp.y = before.y) {
+            dirY = 0;
+        } else {
+            dirY = 1;
+        }
+
+        while (before.x != temp.x || before.y != temp.y) {
+            (board[temp.y][temp.x].color == "white") ? board[temp.y][temp.x].color = "black" : board[temp.y][temp.x].color = "white";//色反転
+            temp.x += dirX;
+            temp.y += dirY; 
+        }
+    }
+    board[before.y][before.x].color = "";
+    beforeDiskPos = board[before.y][before.x].before;
+
+    testView();
 }
 
 
@@ -212,7 +273,7 @@ function OnButtonClick() {
     let x = document.forms.id_form1.id_textBox1.value;
     let y = document.forms.id_form1.id_textBox2.value;
     player = "black";
-    placeDisk(x-0,y-0,player);
+    placeADisk(x-0,y-0,player);
     console.clear();
     testView();
     
@@ -223,7 +284,7 @@ function OnButtonClick2() {
     let x = document.forms.id_form1.id_textBox1.value;
     let y = document.forms.id_form1.id_textBox2.value;
     player = "white";
-    placeDisk(x-0,y-0,player);
+    placeADisk(x-0,y-0,player);
     console.clear();
     testView();
     
