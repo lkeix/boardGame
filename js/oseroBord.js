@@ -72,6 +72,25 @@ function ban_set () {
     return true
 };
 
+// クリックした所に石を置く処理
+function click_func() {
+    ban = document.getElementById('field')
+    for (var x = 0; x < 8; x++) {
+        for (var y = 0; y < 8; y++) {
+            var select_cell = ban.rows[x].cells[y];
+            select_cell.onclick = function () {
+                // クリックされた場所に石がない場合は、
+                if (ban_ar[this.parentNode.rowIndex][this.cellIndex] == 0) {
+                    // その場所にターン側の石が置けるかチェックして、石をおく。
+                    // (木村的アイデア)チェックする関数を作り、その関数の引数にban_arの座標を入れてチェックといいかも。
+                    ban_ar[this.parentNode.rowIndex][this.cellIndex] = 1    //とりあえず、クリックしたところを黒(=ban_arが1)にする処理を記述。
+                    ban_set()   // ban_setにban_arの変更を読み込ませて、HTMLに反映させる。
+                }
+            }
+        }
+    }
+}
+
 //boardの初期化
 function NewBoard() { //[i][j]の位置に変数を用意する
     for (let i = 0; i < 8; i++) {
