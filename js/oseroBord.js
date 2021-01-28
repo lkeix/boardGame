@@ -71,7 +71,6 @@ function ban_set () {
     }
     return true
 };
-
 // クリックした所に石を置く処理
 function click_func() {
     ban = document.getElementById('field')
@@ -128,7 +127,8 @@ function NewBoard() { //[i][j]の位置に変数を用意する
                     canSetWhite: true
                 })
             }
-            else {
+
+            else{
                 tmpA.push({
                     before: null,
                     color: "",
@@ -155,7 +155,6 @@ function placeDisk(xPos, yPos, color) {//左上 xPos = 0, yPos = 0, colorは置�
 
 function placeADisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
 
-    //置いたコマの更新
     board[yPos][xPos].color = color;
     board[yPos][xPos].before = Object.assign({},beforeDiskPos);
 
@@ -222,7 +221,6 @@ function placeADisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
         }
         count = 0;
     }
-
     //ひっくり返す
     while (stack.length != 0) {
         let temp = stack.pop();
