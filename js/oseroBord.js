@@ -1,11 +1,11 @@
 var board = []
 
 function NewBoard() {
-    // [i][j]‚ÌˆÊ’u‚Énext‚Æcolor‚Ìƒf[ƒ^‚ğ“ü‚ê‚é.
+    // [i][j]ï¿½ÌˆÊ’uï¿½ï¿½nextï¿½ï¿½colorï¿½Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
     for (let i = 0; i < 8; i++) {
         let tmpA = []
         for (let j = 0; j < 8; j++) {
-            // next‚ÍŸ‚Ìè‚ÌˆÊ’u, color‚ÍƒRƒ}‚ÌF
+            // nextï¿½Íï¿½ï¿½Ìï¿½ÌˆÊ’u, colorï¿½ÍƒRï¿½}ï¿½ÌF
             if ((i == 3 || i == 4) && i == j) {
                 tmpA.push({
                     next: null,
@@ -18,7 +18,8 @@ function NewBoard() {
                     color: "black"
                 })
             }
-            else {
+
+            else{
                 tmpA.push({
                     next: null,
                     color: ""
@@ -29,37 +30,37 @@ function NewBoard() {
     }
 }
 
-//ƒRƒ}‚ğ’u‚­
-function placeDisk(xPos, yPos, color) { //¶ã xPos = 0, yPos = 0;
+//ï¿½Rï¿½}ï¿½ï¿½uï¿½ï¿½
+function placeDisk(xPos, yPos, color) { //ï¿½ï¿½ï¿½ï¿½ xPos = 0, yPos = 0;
     board[yPos][xPos].color = color;
     
     
-    let sPos = {x:xPos, y:yPos}; //’T‚·ˆÊ’u
+    let sPos = {x:xPos, y:yPos}; //ï¿½Tï¿½ï¿½ï¿½Ê’u
 
-    let rColor; //’u‚­ƒRƒ}‚Æ”½‘Î‚ÌF
+    let rColor; //ï¿½uï¿½ï¿½ï¿½Rï¿½}ï¿½Æ”ï¿½ï¿½Î‚ÌF
     (color == "white") ? rColor = "black" : rColor = "white";
 
     let count = 0;
-    let stack = []; //‚Ğ‚Á‚­‚è•Ô‚·ƒRƒ}‚ÌˆÊ’u‚ğ“ü‚ê‚é
+    let stack = []; //ï¿½Ğ‚ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Rï¿½}ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     let dir = [
-        {x:0,y:-1}, //ã
-        {x:0,y:1}, //‰º
-        {x:-1,y:0}, //¶
-        {x:1,y:0}, //‰E
-        {x:1,y:-1}, //‰Eã
-        {x:-1,y:-1}, //¶ã
-        {x:1,y:1}, //‰E‰º
-        {x:-1,y:1} //¶‰º
+        {x:0,y:-1}, //ï¿½ï¿½
+        {x:0,y:1}, //ï¿½ï¿½
+        {x:-1,y:0}, //ï¿½ï¿½
+        {x:1,y:0}, //ï¿½E
+        {x:1,y:-1}, //ï¿½Eï¿½ï¿½
+        {x:-1,y:-1}, //ï¿½ï¿½ï¿½ï¿½
+        {x:1,y:1}, //ï¿½Eï¿½ï¿½
+        {x:-1,y:1} //ï¿½ï¿½ï¿½ï¿½
     ]; 
     
     
-    //‚Ğ‚Á‚­‚è•Ô‚·ƒRƒ}‚ğstack‚É“ü‚ê‚é
+    //ï¿½Ğ‚ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Rï¿½}ï¿½ï¿½stackï¿½É“ï¿½ï¿½ï¿½ï¿½
     for (let n = 0; n < dir.length; n++) {
         sPos.x = xPos;
         sPos.y = yPos;
 
-        let flag = false; //while ‚ğ”²‚¯‚éƒtƒ‰ƒbƒO;
+        let flag = false; //while ï¿½ğ”²‚ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½O;
         while (true) {
             sPos.x += dir[n].x;
             sPos.y += dir[n].y;
@@ -89,9 +90,13 @@ function placeDisk(xPos, yPos, color) { //¶ã xPos = 0, yPos = 0;
         count = 0;
     }
 
-    //‚Ğ‚Á‚­‚è•Ô‚·
+    //ï¿½Ğ‚ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
     while (stack.length != 0) {
         let temp = stack.pop();
         board[temp.y][temp.x].color = color;
     }
+}
+
+function run(){
+    console.log("Hello");
 }
