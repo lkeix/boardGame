@@ -30,6 +30,8 @@ for (var x = 0; x < ban_ar.length; x++){
 
 // 盤面をスタートの状態(=白黒2枚ずつの状態)にする処理
 function ban_init () {
+
+	/*
     // 全てをクリア
     for (var x = 0; x < 8; x++) {
         for (var y = 0; y < 8; y++) {
@@ -41,7 +43,13 @@ function ban_init () {
     ban_ar[4][3] = 1
     ban_ar[3][4] = 1
     ban_ar[4][4] = -1
-    ban_set()
+	*/
+
+    
+	player = "white";//プレイヤーの初期化
+	board = [];
+	NewBoard();
+    ban_set();
     
     // ターンも初期化
     // turn = 0
@@ -54,21 +62,24 @@ function ban_set () {
     // ban_ar内の要素の値(=0,-1,1)次第でHTMLに表示させるコマを決める
     for (var x = 0; x < 8; x++) {
         for (var y = 0; y < 8; y++) {
-            switch( ban_ar[x][y] ) {
-                case 0:
+            switch( board[y][x].color ) {
+                case "":
                     stone = ""
                     break;
-                case -1:
+                case "white":
                     stone = "○"
                     break;
-                case 1:
+                case "black":
                     stone = "●"
                     break;
             }
             // htmlのtdタグに石をいれる
-            ban.rows[x].cells[y].innerText = stone;
+            ban.rows[y].cells[x].innerText = stone;
         }
     }
+
+    //ターン変更(仮)
+	(player == "white") ? player = "black" : player = "white";
     return true
 };
 // クリックした所に石を置く処理
@@ -78,6 +89,11 @@ function click_func() {
         for (var y = 0; y < 8; y++) {
             var select_cell = ban.rows[x].cells[y];
             select_cell.onclick = function () {
+
+            //石を置く(強制)
+            placeADisk(this.cellIndex, this.parentNode.rowIndex, player);
+            
+		/*
                 // クリックされた場所に石がない場合は、
                 if (ban_ar[this.parentNode.rowIndex][this.cellIndex] == 0) {
                     // その場所にターン側の石が置けるかチェックして、石をおく。
@@ -85,6 +101,10 @@ function click_func() {
                     ban_ar[this.parentNode.rowIndex][this.cellIndex] = 1    //とりあえず、クリックしたところを黒(=ban_arが1)にする処理を記述。
                     ban_set()   // ban_setにban_arの変更を読み込ませて、HTMLに反映させる。
                 }
+        */
+
+            //盤面読み込み 
+		    ban_set();
             }
         }
     }
