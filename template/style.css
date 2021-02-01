@@ -10,3 +10,11 @@
   padding: 1px 1px 1px 1px;
   font-size: 33px;
 }
+
+.whiteStone {
+  color: white;
+}
+
+.blackStone {
+  color: black;
+}
