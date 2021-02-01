@@ -67,14 +67,16 @@ function ban_set() {
           stone = ""
           break;
         case "white":
-          stone = "○"
+          ban.rows[y].cells[x].innerText = "●"
+          ban.rows[y].cells[x].classList.remove("blackStone")
+          ban.rows[y].cells[x].classList.add("whiteStone")
           break;
         case "black":
-          stone = "●"
+          ban.rows[y].cells[x].innerText = "●"
+          ban.rows[y].cells[x].classList.remove("whiteStone")
+          ban.rows[y].cells[x].classList.add("blackStone")
           break;
       }
-      // htmlのtdタグに石をいれる
-      ban.rows[y].cells[x].innerText = stone;
     }
   }
 
@@ -163,12 +165,12 @@ function Black() {
       if (board[i][j].color == "") {
 
         //縦の列で黒のコマを置けるかの確認(置く場所の上か下に白のコマがあり，その奥に黒のコマがあるならOK)
-        if ((board[i + 1][j].color == "white") || (board[i - 1][j].color == "white")) {
+        if ((board[i + 1][j].color === "white") || (board[i - 1][j].color === "white")) {
           for (let k = 2; k < 8; k++) {
             //空白があるならbreak
-            if ((board[i + k][j].color == "") || (board[i - k][j].color == "")) {
+            if ((board[i + k][j].color === "") || (board[i - k][j].color === "")) {
               break;
-            } else if ((board[i + k][j].color == "black") || (board[i - k][j].color == "black")) {
+            } else if ((board[i + k][j].color === "black") || (board[i - k][j].color === "black")) {
               X[i][j] = OK;
               break;
             }
@@ -176,11 +178,11 @@ function Black() {
         }
 
         //横の列で黒のコマを置けるかの確認(置く場所の左か右に白のコマがあり，その奥に黒のコマがあるならOK)
-        if ((board[i][j + 1].color == "white") || (board[i][j - 1].color == "white")) {
+        if ((board[i][j + 1].color === "white") || (board[i][j - 1].color === "white")) {
           for (let k = 2; k < 8; k++) {
-            if ((board[i][j + k].color == "") || (board[i][j - k].color == "")) {
+            if ((board[i][j + k].color === "") || (board[i][j - k].color === "")) {
               break;
-            } else if ((board[i][j + k].color == "black") || (board[i][j + k].color == "black")) {
+            } else if ((board[i][j + k].color === "black") || (board[i][j + k].color === "black")) {
               X[i][j] = OK;
               break;
             }
