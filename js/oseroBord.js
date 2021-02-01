@@ -2,6 +2,7 @@
 
 var board = []
 var ban;
+var turn;
 
 NewBoard();
 testView();
@@ -67,26 +68,40 @@ function ban_set() {
           stone = ""
           break;
         case "white":
-          ban.rows[y].cells[x].innerText = "●"
-          ban.rows[y].cells[x].classList.remove("blackStone")
-          ban.rows[y].cells[x].classList.add("whiteStone")
+          ban.rows[y].cells[x].innerText = "●";
+          ban.rows[y].cells[x].classList.remove("blackStone");
+          ban.rows[y].cells[x].classList.add("whiteStone");
           break;
         case "black":
-          ban.rows[y].cells[x].innerText = "●"
-          ban.rows[y].cells[x].classList.remove("whiteStone")
-          ban.rows[y].cells[x].classList.add("blackStone")
+          ban.rows[y].cells[x].innerText = "●";
+          ban.rows[y].cells[x].classList.remove("whiteStone");
+          ban.rows[y].cells[x].classList.add("blackStone");
           break;
       }
     }
   }
 
   //ターン変更(仮)
+  change_turn();
+
+  return true;
+}
+
+// ターン変更
+function change_turn(){
+  turn = document.getElementById("displayTurn");
   (player == "white") ? player = "black": player = "white";
-  return true
-};
+  if(player == "black"){
+    turn.innerHTML = "黒の番です";
+  }else if(player == "white"){
+    turn.innerHTML = "白の番です";
+  }
+
+
+}
 // クリックした所に石を置く処理
 function click_func() {
-  ban = document.getElementById('field')
+  ban = document.getElementById('field');
   for (var x = 0; x < 8; x++) {
     for (var y = 0; y < 8; y++) {
       var select_cell = ban.rows[x].cells[y];
