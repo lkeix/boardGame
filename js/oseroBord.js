@@ -466,6 +466,21 @@ function ban_count() {
     Game_finish; //geme終了を表示
   }
 }
+//ゲーム終了後の石の数を数える
+function StoneCount(){
+  let Blackcount=0,Whitecount=0;
+  for(let i=0;i<8;i++){
+      for(let j=0;j<8;j++){
+          if(position[i][j].color==”black”){
+              Blackcount = Blackcount+1;
+          }
+          else if(position[i][j].color==”white”){
+              Whitecount = Whitecount +1;
+          }
+      }
+  }
+}
+
 
 function Game_finish() {
   if (victory == black) {
