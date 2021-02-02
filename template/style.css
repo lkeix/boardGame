@@ -11,6 +11,27 @@
   font-size: 33px;
 }
 
+#displayTurn {
+  font-size: 24px;
+  padding: 10px;
+  border-left:5px solid #00ada9;
+
+}
+
+button {
+  display: inline-block;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: #00ada9;
+  border: solid 2px #00ada9;
+  border-radius: 3px;
+  transition: .4s;
+}
+button:hover {
+  background: #00ada9;
+  color: white;
+}
+
 .whiteStone {
   color: white;
 }
