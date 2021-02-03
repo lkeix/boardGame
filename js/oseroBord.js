@@ -32,7 +32,7 @@ for (var x = 0; x < ban_ar.length; x++) {
 // 盤面をスタートの状態(=白黒2枚ずつの状態)にする処理
 function ban_init() {
 
-  /*
+/**
     // 全てをクリア
     for (var x = 0; x < 8; x++) {
         for (var y = 0; y < 8; y++) {
@@ -44,8 +44,8 @@ function ban_init() {
     ban_ar[4][3] = 1
     ban_ar[3][4] = 1
     ban_ar[4][4] = -1
-	*/
 
+*/
 
   player = "white"; //プレイヤーの初期化
   board = [];
@@ -107,8 +107,11 @@ function click_func() {
       var select_cell = ban.rows[x].cells[y];
       select_cell.onclick = function() {
 
-        //石を置く(強制)
-        placeADisk(this.cellIndex, this.parentNode.rowIndex, player);
+
+        // その場所にターン側の石が置けるかチェックして、石をおく。
+        if(canSet(this.cellIndex,this.parentNode.rowIndex)){
+          placeADisk(this.cellIndex, this.parentNode.rowIndex, player);
+        }
 
         /*
                 // クリックされた場所に石がない場合は、
@@ -173,6 +176,9 @@ function NewBoard() { //[i][j]の位置に変数を用意する
   }
 }
 
+/*
+バグがあったのでコメントアウト
+
 function Black() {
   //黒の手番
   for (let i = 0; i < 8; i++) {
@@ -180,25 +186,25 @@ function Black() {
       if (board[i][j].color == "") {
 
         //縦の列で黒のコマを置けるかの確認(置く場所の上か下に白のコマがあり，その奥に黒のコマがあるならOK)
-        if ((board[i + 1][j].color === "white") || (board[i - 1][j].color === "white")) {
+        if ((board[i + 1][j].color == "white") || (board[i - 1][j].color == "white")) {
           for (let k = 2; k < 8; k++) {
             //空白があるならbreak
-            if ((board[i + k][j].color === "") || (board[i - k][j].color === "")) {
+            if ((board[i + k][j].color == "") || (board[i - k][j].color == "")) {
               break;
-            } else if ((board[i + k][j].color === "black") || (board[i - k][j].color === "black")) {
-              X[i][j] = OK;
+            } else if ((board[i + k][j].color == "black") || (board[i - k][j].color == "black")) {
+              X[i][j] == OK;
               break;
             }
           }
         }
 
         //横の列で黒のコマを置けるかの確認(置く場所の左か右に白のコマがあり，その奥に黒のコマがあるならOK)
-        if ((board[i][j + 1].color === "white") || (board[i][j - 1].color === "white")) {
+        if ((board[i][j + 1].color == "white") || (board[i][j - 1].color == "white")) {
           for (let k = 2; k < 8; k++) {
-            if ((board[i][j + k].color === "") || (board[i][j - k].color === "")) {
+            if ((board[i][j + k].color == "") || (board[i][j - k].color == "")) {
               break;
-            } else if ((board[i][j + k].color === "black") || (board[i][j + k].color === "black")) {
-              X[i][j] = OK;
+            } else if ((board[i][j + k].color == "black") || (board[i][j + k].color == "black")) {
+              X[i][j] == OK;
               break;
             }
           }
@@ -211,13 +217,13 @@ function Black() {
               break;
             }
             if ((board[i + k][j + k].color == "black") || (board[i - k][j - k].color == "black")) {
-              X[i][j] = OK;
+              X[i][j] == OK;
             }
           }
         } else if ((board[i + 1][j - 1].color == "white") || (board[i - 1][j + 1].color == "white")) {
           for (let k = 2; k < 8; k++) {
             if ((board[i + k][j - k].color == "black") || (board[i - k][j + k].color == "black")) {
-              X[i][j] = OK;
+              X[i][j] == OK;
             }
           }
         }
@@ -267,9 +273,125 @@ function White() {
       }
     }
   }
+}*/
+
+// 駒をおけるか判定する関数
+function canSet(xPos,yPos){
+  let enemy = "";
+  let nextx;
+  let nexty;
+  (player == "white") ? enemy = "black": enemy = "white";
+
+  // すでに駒がおかれているか調べる
+  if(board[yPos][xPos].color != "" ){
+    console.log(board);
+    console.log("駒あるよ");
+    return false;
+  }
+
+  // 上方向を調べる
+  nexty = yPos-1;
+  while(nexty > 0 && board[nexty][xPos].color == enemy){
+
+    if(board[nexty-1][xPos].color == player){
+      return true;
+    }
+
+    nexty--;
+  }
+
+  // 下方向を調べる
+  nexty = yPos+1;
+  while(nexty < 7 && board[nexty][xPos].color == enemy){
+
+    if(board[nexty+1][xPos].color == player){
+      return true;
+    }
+
+    nexty++;
+  }
+
+  // 左方向を調べる
+  nextx = xPos-1;
+  while(nextx > 0 && board[yPos][nextx].color == enemy){
+
+    if(board[yPos][nextx-1].color == player){
+      return true;
+    }
+
+    nextx--;
+  }
+
+  // 右方向を調べる
+  nextx = xPos+1;
+  while(nextx < 7 && board[yPos][nextx].color == enemy){
+
+    if(board[yPos][nextx+1].color == player){
+      return true;
+    }
+
+    nextx++;
+  }
+
+  // 左上方向
+  nextx = xPos-1;
+  nexty = yPos-1;
+  while(nextx > 0 && nexty > 0 && board[nexty][nextx].color == enemy){
+
+    if(board[nexty-1][nextx-1].color == player){
+      return true;
+    }
+
+    nextx--;
+    nexty--;
+  }
+
+  // 右上方向
+  nextx = xPos+1;
+  nexty = yPos-1;
+  while(nextx < 7 && nexty > 0 && board[nexty][nextx].color == enemy){
+
+    if(board[nexty-1][nextx+1].color == player){
+      return true;
+    }
+
+    nextx++;
+    nexty--;
+  }
+
+  // 左下方向
+  nextx = xPos-1;
+  nexty = yPos+1;
+  while(nextx > 0 && nexty < 7 && board[nexty][nextx].color == enemy){
+
+    if(board[nexty+1][nextx-1].color == player){
+      return true;
+    }
+
+    nextx--;
+    nexty++;
+  }
+
+  // 右下方向
+  nextx = xPos+1;
+  nexty = yPos+1;
+  while(nextx < 7 && nexty < 7 && board[nexty][nextx].color == enemy){
+
+    if(board[nexty+1][nextx+1].color == player){
+      return true;
+    }
+
+    nextx++;
+    nexty++;
+  }
+
+  return false;
+
 }
 
+
 //コマを置く(この関数を使う)
+/*
 function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0, colorは置く色;
   if (board[yPos][xPos].canSetBlack && color === "black" || board[yPos][xPos].canSetWhite && color === "white") {
     placeADisk(xPos, yPos, color);
@@ -277,7 +399,7 @@ function placeDisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0, colorは置
 
 
   }
-}
+}*/
 
 
 function placeADisk(xPos, yPos, color) { //左上 xPos = 0, yPos = 0;
@@ -481,6 +603,7 @@ function ban_count() {
     Game_finish; //geme終了を表示
   }
 }
+/*
 //ゲーム終了後の石の数を数える
 function StoneCount(){
   let Blackcount=0,Whitecount=0;
@@ -494,7 +617,7 @@ function StoneCount(){
           }
       }
   }
-}
+}*/
 
 
 function Game_finish() {
