@@ -3,6 +3,8 @@
 var board = []
 var ban;
 var turn;
+var Blackcount;
+var Whitecount;
 
 NewBoard();
 testView();
@@ -80,17 +82,18 @@ function ban_set() {
       }
     }
   }
-
-  //ターン変更(仮)
+  // 交代
   change_turn();
-
   return true;
 }
 
 // ターン変更
 function change_turn(){
   turn = document.getElementById("displayTurn");
+  // player交代
   (player == "white") ? player = "black": player = "white";
+
+
   if(player == "black"){
     turn.innerHTML = "黒の番です";
   }else if(player == "white"){
@@ -110,7 +113,24 @@ function click_func() {
 
         // その場所にターン側の石が置けるかチェックして、石をおく。
         if(canSet(this.cellIndex,this.parentNode.rowIndex)){
+
           placeADisk(this.cellIndex, this.parentNode.rowIndex, player);
+
+          //盤面読み込み＆交代
+          ban_set();
+
+        }
+
+        // パス判定
+        if(is_pass()){
+          alert(player+"パス");
+          // player交代
+          change_turn();
+          // 二連続パス
+          if(is_pass()){
+            alert(player+"パス");
+            Game_finish();
+          }
         }
 
         /*
@@ -123,8 +143,7 @@ function click_func() {
                 }
         */
 
-        //盤面読み込み
-        ban_set();
+
       }
     }
   }
@@ -284,8 +303,6 @@ function canSet(xPos,yPos){
 
   // すでに駒がおかれているか調べる
   if(board[yPos][xPos].color != "" ){
-    console.log(board);
-    console.log("駒あるよ");
     return false;
   }
 
@@ -590,42 +607,48 @@ function OnButtonClick2() {
 
 //盤面の白黒それぞれの駒の数を数える
 function ban_count() {
-
-
-
-
-  //盤面の駒が1色になった場合
-  if (count_white == 0) {
-    victory = black;
-    Game_finish; //geme終了を表示
-  } else if (count_black == 0) {
-    victory = white;
-    Game_finish; //geme終了を表示
-  }
-}
-/*
-//ゲーム終了後の石の数を数える
-function StoneCount(){
-  let Blackcount=0,Whitecount=0;
+  Blackcount=0;
+  Whitecount=0;
   for(let i=0;i<8;i++){
+
       for(let j=0;j<8;j++){
-          if(position[i][j].color==”black”){
-              Blackcount = Blackcount+1;
-          }
-          else if(position[i][j].color==”white”){
-              Whitecount = Whitecount +1;
-          }
+        if(board[i][j].color == "black"){
+          Blackcount++;
+        }else if(board[i][j].color == "white"){
+          Whitecount++;
+        }
       }
   }
-}*/
+
+  console.log(Whitecount,Blackcount);
+}
+
+//パス判定
+function is_pass(){
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      if(canSet(i,j)){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+
 
 
 function Game_finish() {
-  if (victory == black) {
-    let string = '黒の勝利です';
-    string;
-  } else {
-    let string = '白の勝利です';
-    string;
+
+  let victory = "";
+  let str = document.getElementById("displayWinner");
+  ban_count();
+  if (Blackcount > Whitecount) {
+    str.innerHTML = '黒の勝利です';
+  } else if (Whitecount > Blackcount){
+    str.innerHTML = '白の勝利です';
+  }else{
+    str.innerHTML = '引き分け';
+
   }
 }
